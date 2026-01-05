@@ -3,6 +3,7 @@
   "displayName": "Copy as URI",
   "description": "Adds a command that copies the current file and line number as a VSCode-schema URI.",
   "version": "0.0.1",
+  "publisher": "dylcdav",
   "engines": {
     "vscode": "^1.107.0"
   },
