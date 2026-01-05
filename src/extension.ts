@@ -42,6 +42,41 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(disposable);
+
+	// Register the "Copy as URI Hyperlink" command
+	const hyperlinkDisposable = vscode.commands.registerCommand('copy-as-uri.copyAsHyperlink', () => {
+		// Get the active text editor
+		const editor = vscode.window.activeTextEditor;
+
+		if (!editor) {
+			vscode.window.showErrorMessage('No file is currently open');
+			return;
+		}
+
+		// Get the current file URI
+		const fileUri = editor.document.uri;
+		const fileName = fileUri.fsPath.split(/[\\/]/).pop() || 'file'; // Get just the filename
+
+		// Get the current cursor position
+		const position = editor.selection.active;
+		const line = position.line + 1; // Convert to 1-based line number
+		const column = position.character + 1; // Convert to 1-based column number
+
+		// Construct the VSCode URI in the format: vscode://file/{path}:line:column
+		const vscodeUri = `vscode://file/${fileUri.fsPath}:${line}:${column}`;
+
+		// Create markdown hyperlink in format: [FileName.ext:lineNum](vscode://...)
+		const hyperlink = `[\`${fileName}:${line}\`](${vscodeUri})`;
+
+		// Copy to clipboard
+		vscode.env.clipboard.writeText(hyperlink).then(() => {
+			vscode.window.showInformationMessage(`Copied hyperlink to clipboard: ${hyperlink}`);
+		}, (error) => {
+			vscode.window.showErrorMessage(`Failed to copy hyperlink: ${error}`);
+		});
+	});
+
+	context.subscriptions.push(hyperlinkDisposable);
 }
 
 // This method is called when your extension is deactivated

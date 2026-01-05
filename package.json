@@ -16,6 +16,10 @@
       {
         "command": "copy-as-uri.copyCurrentFileUri",
         "title": "Copy as URI"
+      },
+      {
+        "command": "copy-as-uri.copyAsHyperlink",
+        "title": "Copy as URI Hyperlink"
       }
     ]
   },
