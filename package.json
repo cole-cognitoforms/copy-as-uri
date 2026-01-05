@@ -21,7 +21,21 @@
         "command": "copy-as-uri.copyAsHyperlink",
         "title": "Copy as URI Hyperlink"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context/copy": [
+        {
+          "command": "copy-as-uri.copyCurrentFileUri",
+          "group": "copy",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "copy-as-uri.copyAsHyperlink",
+          "group": "copy",
+          "when": "editorTextFocus"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
