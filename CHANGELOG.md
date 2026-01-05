@@ -1,9 +1,9 @@
 # Change Log
 
-All notable changes to the "copy-as-uri" extension will be documented in this file.
+## [0.0.1] - 2026-01-05
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+### Added
+- Copy as URI command - copies VSCode URI scheme for current file and line
+- Copy as URI Hyperlink command - copies markdown hyperlink format
+- Context menu integration under "Copy As" submenu
+- Command Palette integration
