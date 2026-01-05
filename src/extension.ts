@@ -13,10 +13,32 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('copy-as-uri.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Copy as URI!');
+	const disposable = vscode.commands.registerCommand('copy-as-uri.copyCurrentFileUri', () => {
+		// Get the active text editor
+		const editor = vscode.window.activeTextEditor;
+
+		if (!editor) {
+			vscode.window.showErrorMessage('No file is currently open');
+			return;
+		}
+
+		// Get the current file URI
+		const fileUri = editor.document.uri;
+
+		// Get the current cursor position
+		const position = editor.selection.active;
+		const line = position.line + 1; // Convert to 1-based line number
+		const column = position.character + 1; // Convert to 1-based column number
+
+		// Construct the VSCode URI in the format: vscode://file/{path}:line:column
+		const vscodeUri = `vscode://file/${fileUri.fsPath}:${line}:${column}`;
+
+		// Copy to clipboard
+		vscode.env.clipboard.writeText(vscodeUri).then(() => {
+			vscode.window.showInformationMessage(`Copied URI to clipboard: ${vscodeUri}`);
+		}, (error) => {
+			vscode.window.showErrorMessage(`Failed to copy URI: ${error}`);
+		});
 	});
 
 	context.subscriptions.push(disposable);
